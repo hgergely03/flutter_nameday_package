@@ -29,9 +29,12 @@ Future<List<String>> _oneDayRequest(
 
   /// Check response
   if (data.statusCode == 200) {
-    Map<String, String> nameDaysWithCountryTag =
-        json.decode(data.body)["data"]["namedays"] as Map<String, String>;
-    nameDays.addAll(nameDaysWithCountryTag.values);
+    Map<String, dynamic> nameDaysWithCountryTag =
+        json.decode(data.body)["data"]["namedays"] as Map<String, dynamic>;
+    nameDaysWithCountryTag.forEach((key, value) {
+      List<String> helper = value.toString().split(',');
+      nameDays.addAll(helper);
+    });
   } else {
     printError(data);
   }
@@ -39,7 +42,7 @@ Future<List<String>> _oneDayRequest(
   return nameDays;
 }
 
-Future<DateTime?> _searchByNameRequest(
+Future<List<DateTime>> _searchByNameRequest(
     {required String name, required CountryCodes countryCode}) async {
   /// Build a request
   var request = http.Request('POST', Uri.parse(_baseURL + 'getdate'));
@@ -50,21 +53,19 @@ Future<DateTime?> _searchByNameRequest(
   /// Send request to API then get response
   http.StreamedResponse response = await request.send();
   var data = await http.Response.fromStream(response);
-  final DateTime? nameDayDate;
+  final List<DateTime> nameDayDates = [];
 
   /// Check response
   if (data.statusCode == 200) {
     var namedays = json.decode(data.body)["data"]["namedays"];
-    Map<String, dynamic> nameDayProperties =
-        namedays.first as Map<String, dynamic>;
-
-    nameDayDate =
-        DateTime(0, nameDayProperties["month"], nameDayProperties["day"]);
-    print('Month: ${nameDayDate.month} day: ${nameDayDate.day}');
-    return nameDayDate;
+      namedays.forEach((element) {
+      nameDayDates.add(DateTime(0, element["month"], element["day"]));
+    });
   } else {
     printError(data);
   }
+
+  return nameDayDates;
 }
 
 Future<List<String>> _searchSpecificDayRequest(
@@ -88,8 +89,11 @@ Future<List<String>> _searchSpecificDayRequest(
   /// Check response
   if (data.statusCode == 200) {
     var nameDaysData = json.decode(data.body)["data"]["namedays"];
-    Map<String, String> nameDays = nameDaysData as Map<String, String>;
-    nameDaysOnDate.addAll(nameDays.values);
+    Map<String, dynamic> nameDays = nameDaysData as Map<String, dynamic>;
+    nameDays.forEach((key, value) {
+      List<String> helper = value.toString().split(',');
+      nameDaysOnDate.addAll(helper);
+    });
   } else {
     printError(data);
   }
@@ -127,8 +131,8 @@ class Nameday {
   }
 
   /// Return a month and day when the nameday of the searched name is celebrated.
-  /// A country or country code must be specified.
-  static Future<DateTime?> searchByName(
+  /// A name and a country or country code must be specified.
+  static Future<List<DateTime>> searchByName(
       {required String name, required CountryCodes country}) async {
     return _searchByNameRequest(name: name, countryCode: country);
   }

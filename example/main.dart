@@ -9,6 +9,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('data');
+    return FutureBuilder(
+      future: Nameday.today(country: CountryCodes.Hungary),
+      builder: (context, snapshot) => Text(snapshot.data.toString()),
+    );
   }
 }

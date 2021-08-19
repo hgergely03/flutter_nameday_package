@@ -1,6 +1,6 @@
 name: flutter_nameday_api
 description: A Flutter wrapper for Abalin.net nameday API
-version: 0.0.1
+version: 1.0.0
 homepage: https://github.com/hgergely03/flutter_nameday_package
 
 environment:
