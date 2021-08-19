@@ -1,6 +1,6 @@
 /// All the available countries and country codes.
 /// Using full name or code makes no difference.
-enum CountryCodes {
+enum Countries {
   Austria,
   at,
   aut,

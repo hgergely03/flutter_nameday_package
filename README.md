@@ -97,7 +97,7 @@ All the above methods return future lists, so just plug them into a FutureBuilde
         },
       ),
 
-![](docs/example_screenshot.png)
+![Much namedays, such cards!](doc/example_screenshot.png)
 
 # Features, bugs and feedback
 Did you encounter any problems while using this package? Would you like to see a feature added to it? Feel free to create an issue [here](https://github.com/hgergely03/flutter_nameday_package/issues) or send a pull request my way!

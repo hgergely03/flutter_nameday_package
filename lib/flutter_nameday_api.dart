@@ -13,8 +13,8 @@ const _headers = {
 };
 
 Future<List<String>> _oneDayRequest(
-    {required String when, CountryCodes? countryCode}) async {
-  /// Build a request
+    {required String when, Countries? countryCode}) async {
+  /// Builds a request
   var request = http.Request('POST', Uri.parse(_baseURL + when));
   if (countryCode != null) {
     request.body =
@@ -22,12 +22,12 @@ Future<List<String>> _oneDayRequest(
   }
   request.headers.addAll(_headers);
 
-  /// Send request to API then get response
+  /// Sends request to API then get response
   http.StreamedResponse response = await request.send();
   var data = await http.Response.fromStream(response);
   List<String> nameDays = [];
 
-  /// Check response
+  /// Checks response
   if (data.statusCode == 200) {
     Map<String, dynamic> nameDaysWithCountryTag =
         json.decode(data.body)["data"]["namedays"] as Map<String, dynamic>;
@@ -43,19 +43,19 @@ Future<List<String>> _oneDayRequest(
 }
 
 Future<List<DateTime>> _searchByNameRequest(
-    {required String name, required CountryCodes countryCode}) async {
-  /// Build a request
+    {required String name, required Countries countryCode}) async {
+  /// Builds a request
   var request = http.Request('POST', Uri.parse(_baseURL + 'getdate'));
   request.body = json
       .encode({"name": name, "country": _formatCountry(country: countryCode)});
   request.headers.addAll(_headers);
 
-  /// Send request to API then get response
+  /// Sends request to API then get response
   http.StreamedResponse response = await request.send();
   var data = await http.Response.fromStream(response);
   final List<DateTime> nameDayDates = [];
 
-  /// Check response
+  /// Checks response
   if (data.statusCode == 200) {
     var namedays = json.decode(data.body)["data"]["namedays"];
       namedays.forEach((element) {
@@ -71,7 +71,7 @@ Future<List<DateTime>> _searchByNameRequest(
 Future<List<String>> _searchSpecificDayRequest(
     {required int day,
     required int month,
-    required CountryCodes countryCode}) async {
+    required Countries countryCode}) async {
   /// Build a request
   var request = http.Request('POST', Uri.parse(_baseURL + 'namedays'));
   request.body = json.encode({
@@ -101,7 +101,7 @@ Future<List<String>> _searchSpecificDayRequest(
   return nameDaysOnDate;
 }
 
-String _formatCountry({required CountryCodes country}) {
+String _formatCountry({required Countries country}) {
   String formattedCountry =
       describeEnum(country).replaceAll('_', ' ').toLowerCase();
   return formattedCountry;
@@ -115,34 +115,34 @@ void printError(data) {
 
 /// Definitely not A Calculator.
 class Nameday {
-  /// Return today's namedays. Specifying a country or country code is optional.
-  static Future<List<String>> today({CountryCodes? country}) async {
+  /// Returns today's namedays. Specifying a country or country code is optional.
+  static Future<List<String>> today({Countries? country}) async {
     return _oneDayRequest(when: 'today', countryCode: country);
   }
 
-  /// Return tomorrow's namedays. Specifying a country or country code is optional.
-  static Future<List<String>> tomorrow({CountryCodes? country}) async {
+  /// Returns tomorrow's namedays. Specifying a country or country code is optional.
+  static Future<List<String>> tomorrow({Countries? country}) async {
     return _oneDayRequest(when: 'tomorrow', countryCode: country);
   }
 
-  /// Return yesterday's namedays. Specifying a country or country code is optional.
-  static Future<List<String>> yesterday({CountryCodes? country}) async {
+  /// Returns yesterday's namedays. Specifying a country or country code is optional.
+  static Future<List<String>> yesterday({Countries? country}) async {
     return _oneDayRequest(when: 'yesterday', countryCode: country);
   }
 
-  /// Return a month and day when the nameday of the searched name is celebrated.
+  /// Returns a month and day when the nameday of the searched name is celebrated.
   /// A name and a country or country code must be specified.
   static Future<List<DateTime>> searchByName(
-      {required String name, required CountryCodes country}) async {
+      {required String name, required Countries country}) async {
     return _searchByNameRequest(name: name, countryCode: country);
   }
 
-  /// Return the nameday(s) celebrated on the specified day.
+  /// Returns the nameday(s) celebrated on the specified day.
   /// A month, a day and a country or country code must be specified.
   static Future<List<String>> specificDay(
       {required int day,
       required int month,
-      required CountryCodes country}) async {
+      required Countries country}) async {
     return _searchSpecificDayRequest(
         countryCode: country, day: day, month: month);
   }
