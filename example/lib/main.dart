@@ -30,7 +30,7 @@ List<FutureBuilder> _tiles = [
   _builder('Namedays today', Nameday.today()),
   _builder('Namedays tomorrow', Nameday.tomorrow()),
   _builder('Namedays yesterday', Nameday.yesterday()),
-  _builder('Seach nameday by day',
+  _builder('Search nameday by day',
       Nameday.specificDay(day: 28, month: 03, country: Countries.Hungary)),
   _builder('Search date by name',
       Nameday.searchByName(name: 'János', country: Countries.hu)),
