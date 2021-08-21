@@ -70,34 +70,43 @@ Now in your `Dart` code, you can use:
 
 ### Example
 
-All the above methods return future lists, so just plug them into a FutureBuilder and you're good to go:
+All the above methods return their respective future classes, so just plug them into a FutureBuilder and you're good to go:
 
     FutureBuilder(
-        future:
-            Nameday.specificDay(day: 28, month: 3, country: CountryCodes.hu),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Widget> nameDaysOnCards = [];
-            snapshot.data.forEach(
-              (element) => nameDaysOnCards.add(
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(element),
-                  ),
+      future: Nameday.today(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          /// snapshot.data is assigned to the type of class returned by the future
+          /// for later ease of use
+          OneDayData nameDays = snapshot.data;
+          return ExpansionTile(
+            title: Text('Namedays today'),
+            children: [
+              /// This fluff is where we process the data (lists) returned
+              /// so we get a bunch of decently pretty ExpansionTiles
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text('Today is ${nameDays.month}/${nameDays.day}'),
+                    for (var element in nameDays.nameDays)
+                      Text(
+                        element,
+                        style: _textStyle(),
+                      ),
+                  ],
                 ),
               ),
-            );
-            return Column(
-              children: nameDaysOnCards,
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        },
-      ),
+            ],
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    ),
 
-![Much namedays, such cards!](doc/example_screenshot.png)
+You can see a longer example with all the methods in examples.
+
+![Much namedays, such tiles!](doc/example_screenshot.png)
 
 # Features, bugs and feedback
 Did you encounter any problems while using this package? Would you like to see a feature added to it? Feel free to create an issue [here](https://github.com/hgergely03/flutter_nameday_package/issues) or send a pull request my way!
