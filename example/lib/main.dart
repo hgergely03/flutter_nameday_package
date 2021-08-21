@@ -24,44 +24,31 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// Here we specify the title of the Expansion titles
-/// and what kind of data we would like to see when opened
-List<FutureBuilder> _tiles = [
-  _builder('Namedays today', Nameday.today()),
-  _builder('Namedays tomorrow', Nameday.tomorrow()),
-  _builder('Namedays yesterday', Nameday.yesterday()),
-  _builder('Search nameday by day',
-      Nameday.specificDay(day: 28, month: 03, country: Countries.Hungary)),
-  _builder('Search date by name',
-      Nameday.searchByName(name: 'János', country: Countries.hu)),
-];
-
 /// ↓ This is the part you're most probably interested in
-FutureBuilder _builder(String title, Future<dynamic> future) {
-  return FutureBuilder(
-    /// Plug the built-in method of your choice into a FutureBuilder
-    /// (or whatever you prefer to handle futures) and you're good to go
-    future: future,
+List<FutureBuilder> _tiles = [
+  /// Plug the built-in method of your choice into a FutureBuilder
+  /// (or whatever you prefer to handle futures) and you're good to go
+  FutureBuilder(
+    future: Nameday.today(),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
+        /// snapshot.data is assigned to the type of class returned by the future
+        /// for later ease of use
+        OneDayData nameDays = snapshot.data;
         return ExpansionTile(
-          title: Text(title),
+          title: Text('Namedays today'),
           children: [
             /// This fluff is where we process the data (lists) returned
-            /// so we get a bunch of pretty ExpansionTiles
+            /// so we get a bunch of decently pretty ExpansionTiles
             SingleChildScrollView(
               child: Column(
                 children: [
-                  for (var element in snapshot.data)
-                    element.runtimeType == DateTime
-                        ? Text(
-                            'Month: ${element.month} Day: ${element.day}',
-                            style: _textStyle(),
-                          )
-                        : Text(
-                            element,
-                            style: _textStyle(),
-                          ),
+                  Text('Today is ${nameDays.month}/${nameDays.day}'),
+                  for (var element in nameDays.nameDays)
+                    Text(
+                      element,
+                      style: _textStyle(),
+                    ),
                 ],
               ),
             ),
@@ -71,8 +58,119 @@ FutureBuilder _builder(String title, Future<dynamic> future) {
         return CircularProgressIndicator();
       }
     },
-  );
-}
+  ),
+  FutureBuilder(
+    future: Nameday.yesterday(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        OneDayData nameDays = snapshot.data;
+        return ExpansionTile(
+          title: Text('Namedays yesterday'),
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text('Yesterday was ${nameDays.month}/${nameDays.day}'),
+                  for (var element in nameDays.nameDays)
+                    Text(
+                      element,
+                      style: _textStyle(),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      } else {
+        return CircularProgressIndicator();
+      }
+    },
+  ),
+  FutureBuilder(
+    future: Nameday.tomorrow(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        OneDayData nameDays = snapshot.data;
+        return ExpansionTile(
+          title: Text('Namedays tomorrow'),
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text('Tomorrow is ${nameDays.month}/${nameDays.day}'),
+                  for (var element in nameDays.nameDays)
+                    Text(
+                      element,
+                      style: _textStyle(),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      } else {
+        return CircularProgressIndicator();
+      }
+    },
+  ),
+  FutureBuilder(
+    future: Nameday.specificDay(
+      day: 28,
+      month: 03,
+    ),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        SpecificDay nameDays = snapshot.data;
+        return ExpansionTile(
+          title: Text('Search nameday by day'),
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text('Namedays on ${nameDays.month}/${nameDays.day}'),
+                  for (var element in nameDays.nameDays)
+                    Text(
+                      element,
+                      style: _textStyle(),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      } else {
+        return CircularProgressIndicator();
+      }
+    },
+  ),
+  FutureBuilder(
+    future: Nameday.searchByName(name: 'János', country: Countries.hu),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        SearchByName nameDays = snapshot.data;
+        return ExpansionTile(
+          title: Text('Search date by name'),
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text('Number of results in search: ${nameDays.resultCount}'),
+                  for (var result in nameDays.results)
+                    Text(
+                      '${result.month}/${result.day}',
+                      style: _textStyle(),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      } else {
+        return CircularProgressIndicator();
+      }
+    },
+  ),
+];
 
 /// Just some text formatting because
 /// I can't publish an ugly example file, can I?

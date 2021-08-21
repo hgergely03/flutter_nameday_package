@@ -10,7 +10,6 @@ export 'package:flutter_nameday_api/models.dart';
 /// Definitely not A Calculator.
 class Nameday {
   /// Returns today's namedays. Specifying a country or country code is optional.
-  /// Members: day, month, nameDays, nameDaysWithCodes
   static Future<OneDayData> today({Countries? country}) async {
     return oneDayRequest(when: 'today', countryCode: country, client: http.Client());
   }

@@ -6,14 +6,14 @@ class OneDayData {
 
   OneDayData(
       {required this.month,
-        required this.day,
-        required this.nameDays,
-        required this.nameDaysWithCodes});
+      required this.day,
+      required this.nameDays,
+      required this.nameDaysWithCodes});
 
   factory OneDayData.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> namesWithCodes = json["data"]["namedays"];
     Map<String, List<String>> countryCodesHelper =
-    new Map<String, List<String>>();
+        new Map<String, List<String>>();
     List<String> nameDaysHelper = [];
 
     namesWithCodes.forEach((key, value) {
@@ -31,44 +31,54 @@ class OneDayData {
   }
 }
 
+class NameDayData {
+  final int day;
+  final int month;
+  final List<String> name;
+  final String countryCode;
+  final String countryName;
+
+  NameDayData(
+      {required this.day,
+      required this.month,
+      required this.name,
+      required this.countryCode,
+      required this.countryName});
+
+  factory NameDayData.fromJson(Map<String, dynamic> json) {
+    int day = json["day"];
+    int month = json["month"];
+    List<String> name = json["name"].toString().split(',');
+    String countryCode = json["countryCode"];
+    String countryName = json["countryName"];
+
+    return NameDayData(
+        day: day,
+        month: month,
+        name: name,
+        countryCode: countryCode,
+        countryName: countryName);
+  }
+}
+
 class SearchByName {
   final int resultCount;
-  final List<int> day;
-  final List<int> month;
-  final List<List<String>> name;
-  final List<String> countryCode;
-  final List<String> country;
+  final List<NameDayData> results;
 
-  SearchByName(
-      {required this.resultCount,
-        required this.day,
-        required this.month,
-        required this.name,
-        required this.countryCode,
-        required this.country});
+  SearchByName({required this.resultCount, required this.results});
 
   factory SearchByName.fromJson(Map<String, dynamic> json) {
     List<dynamic> nameDays = json["data"]["namedays"];
-    List<int> day = [];
-    List<int> month = [];
-    List<List<String>> name = [];
-    List<String> countryCode = [];
-    List<String> country = [];
+    int resultCount = json["data"]["resultCount"];
+    List<NameDayData> nameDaysData = [];
+
     nameDays.forEach((element) {
-      day.add(element["day"]);
-      month.add(element["month"]);
-      name.add(element["name"].toString().split(','));
-      countryCode.add(element["countryCode"]);
-      country.add(element["countryName"]);
+      nameDaysData.add(NameDayData.fromJson(element));
     });
 
     return SearchByName(
-      resultCount: json["data"]["resultCount"],
-      day: day,
-      month: month,
-      name: name,
-      countryCode: countryCode,
-      country: country,
+      resultCount: resultCount,
+      results: nameDaysData,
     );
   }
 }
@@ -81,14 +91,14 @@ class SpecificDay {
 
   SpecificDay(
       {required this.month,
-        required this.day,
-        required this.nameDays,
-        required this.nameDaysWithCodes});
+      required this.day,
+      required this.nameDays,
+      required this.nameDaysWithCodes});
 
   factory SpecificDay.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> namesWithCodes = json["data"]["namedays"];
     Map<String, List<String>> countryCodesHelper =
-    new Map<String, List<String>>();
+        new Map<String, List<String>>();
     List<String> nameDaysHelper = [];
 
     namesWithCodes.forEach((key, value) {
