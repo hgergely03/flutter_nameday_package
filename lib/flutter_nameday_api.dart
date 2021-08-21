@@ -2,7 +2,7 @@ library flutter_nameday_api;
 
 import 'package:flutter_nameday_api/country_codes.dart';
 import 'package:flutter_nameday_api/models.dart';
-import 'package:flutter_nameday_api/requests.dart';
+import 'package:flutter_nameday_api/src/requests.dart';
 import 'package:http/http.dart' as http;
 export 'package:flutter_nameday_api/country_codes.dart';
 export 'package:flutter_nameday_api/models.dart';
