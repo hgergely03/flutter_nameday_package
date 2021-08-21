@@ -5,33 +5,8 @@
 <h2 align="center">A Flutter wrapper for Abalin.net nameday API</h2>
 
 # Table of contents
-<!-- - [Installing](#install) -->
 - [List of supported countries](#countries)
 - [Usage](#usage)
-
-<!-- # <a name="install"></a>Installing
-### 1. Depend on it
-
-Add this to your package's pubspec.yaml file:
-    
-    dependencies:
-        flutter_nameday_api: ^1.0.0
-
-### 2. Install it
-You can install packages from the command line:
-
-with `pub`:
-
-    $ pub get
-
-with `Flutter`:
-
-    $ flutter pub get
-
-### 3. Import it
-Now in your `Dart` code, you can use:
-
-    import 'package:flutter_nameday_api/flutter_nameday_api.dart'; -->
 
 # <a name="countries"></a>Supported countries
 - Austria
@@ -66,7 +41,7 @@ Now in your `Dart` code, you can use:
 | Nameday.searchByName() | Get the date when a nameday is celebrated | name, country       |
 | Nameday.specificDay()  | Get nameday(s) on a specific day          | country, day, month |
 
-[More in Dart docs]()
+[More in Dart docs](/doc/api/index.html)
 
 ### Example
 
