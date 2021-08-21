@@ -38,7 +38,7 @@ Future<OneDayData> oneDayRequest(
   if (data.statusCode == 200) {
     return OneDayData.fromJson(json.decode(data.body));
   } else {
-    _printError(data);
+    // _printError(data);
     throw Exception('Fail');
   }
 }
