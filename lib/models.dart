@@ -61,13 +61,13 @@ class NameDayData {
   }
 }
 
-class SearchByName {
+class SearchByNameData {
   final int resultCount;
   final List<NameDayData> results;
 
-  SearchByName({required this.resultCount, required this.results});
+  SearchByNameData({required this.resultCount, required this.results});
 
-  factory SearchByName.fromJson(Map<String, dynamic> json) {
+  factory SearchByNameData.fromJson(Map<String, dynamic> json) {
     List<dynamic> nameDays = json["data"]["namedays"];
     int resultCount = json["data"]["resultCount"];
     List<NameDayData> nameDaysData = [];
@@ -76,26 +76,26 @@ class SearchByName {
       nameDaysData.add(NameDayData.fromJson(element));
     });
 
-    return SearchByName(
+    return SearchByNameData(
       resultCount: resultCount,
       results: nameDaysData,
     );
   }
 }
 
-class SpecificDay {
+class SpecificDayData {
   final int month;
   final int day;
   final List<String> nameDays;
   final Map<String, List<String>> nameDaysWithCodes;
 
-  SpecificDay(
+  SpecificDayData(
       {required this.month,
       required this.day,
       required this.nameDays,
       required this.nameDaysWithCodes});
 
-  factory SpecificDay.fromJson(Map<String, dynamic> json) {
+  factory SpecificDayData.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> namesWithCodes = json["data"]["namedays"];
     Map<String, List<String>> countryCodesHelper =
         new Map<String, List<String>>();
@@ -109,7 +109,7 @@ class SpecificDay {
 
     List<String> day = json["data"]["date"].toString().split('/');
 
-    return SpecificDay(
+    return SpecificDayData(
       month: int.parse(day.first),
       day: int.parse(day.last),
       nameDays: nameDaysHelper,

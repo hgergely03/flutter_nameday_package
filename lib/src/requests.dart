@@ -44,7 +44,7 @@ Future<OneDayData> oneDayRequest(
 }
 
 /// Handles requests for searchByName()
-Future<SearchByName> searchNameDayRequest(
+Future<SearchByNameData> searchNameDayRequest(
     {required String name,
     required Countries countryCode,
     required http.Client client}) async {
@@ -54,7 +54,7 @@ Future<SearchByName> searchNameDayRequest(
           {"name": name, "country": _formatCountry(country: countryCode)}));
 
   if (data.statusCode == 200) {
-    return SearchByName.fromJson(json.decode(data.body));
+    return SearchByNameData.fromJson(json.decode(data.body));
   } else {
     _printError(data);
     throw Exception('Fail');
@@ -62,7 +62,7 @@ Future<SearchByName> searchNameDayRequest(
 }
 
 /// Handles requests for specificDay()
-Future<SpecificDay> specificDayRequest(
+Future<SpecificDayData> specificDayRequest(
     {required int day,
     required int month,
     required Countries? countryCode,
@@ -79,7 +79,7 @@ Future<SpecificDay> specificDayRequest(
           : json.encode({"day": day, "month": month}));
 
   if (data.statusCode == 200) {
-    return SpecificDay.fromJson(json.decode(data.body));
+    return SpecificDayData.fromJson(json.decode(data.body));
   } else {
     _printError(data);
     throw Exception('Fail');

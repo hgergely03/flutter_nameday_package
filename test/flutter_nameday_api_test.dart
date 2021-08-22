@@ -59,7 +59,7 @@ void main() {
       expect(
           await searchNameDayRequest(
               name: 'Béla', countryCode: Countries.hu, client: client),
-          isA<SearchByName>());
+          isA<SearchByNameData>());
     });
 
     // Test unsuccessful response
@@ -95,7 +95,7 @@ void main() {
       expect(
           await specificDayRequest(
               day: 28, month: 2, countryCode: Countries.Sweden, client: client),
-          isA<SpecificDay>());
+          isA<SpecificDayData>());
     });
 
     // Test unsuccessful response

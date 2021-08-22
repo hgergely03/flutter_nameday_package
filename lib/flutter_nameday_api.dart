@@ -26,7 +26,7 @@ class Nameday {
 
   /// Returns a month and day when the nameday of the searched name is celebrated.
   /// A name and a country or country code must be specified.
-  static Future<SearchByName> searchByName(
+  static Future<SearchByNameData> searchByName(
       {required String name, required Countries country}) async {
     return searchNameDayRequest(name: name, countryCode: country, client: http.Client());
   }
@@ -34,7 +34,7 @@ class Nameday {
   /// Returns the nameday(s) celebrated on the specified day.
   /// A month and a day must be specified.
   /// Specifying a country or country code is optional.
-  static Future<SpecificDay> specificDay(
+  static Future<SpecificDayData> specificDay(
       {required int day, required int month, Countries? country}) async {
     return specificDayRequest(countryCode: country, day: day, month: month, client: http.Client());
   }

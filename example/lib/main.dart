@@ -24,22 +24,22 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// ↓ This is the part you're most probably interested in
+// ↓ This is the part you're most probably interested in
 List<FutureBuilder> _tiles = [
-  /// Plug the built-in method of your choice into a FutureBuilder
-  /// (or whatever you prefer to handle futures) and you're good to go
+  // Plug the built-in method of your choice into a FutureBuilder
+  // (or whatever you prefer to handle futures) and you're good to go
   FutureBuilder(
     future: Nameday.today(),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        /// snapshot.data is assigned to the type of class returned by the future
-        /// for later ease of use
+        // snapshot.data is assigned to the type of class returned by the future
+        // for later ease of use
         OneDayData nameDays = snapshot.data;
         return ExpansionTile(
           title: Text('Namedays today'),
           children: [
-            /// This fluff is where we process the data (lists) returned
-            /// so we get a bunch of decently pretty ExpansionTiles
+            // This fluff is where we process the data (lists) returned
+            // so we get a bunch of decently pretty ExpansionTiles
             SingleChildScrollView(
               child: Column(
                 children: [
@@ -120,7 +120,7 @@ List<FutureBuilder> _tiles = [
     ),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        SpecificDay nameDays = snapshot.data;
+        SpecificDayData nameDays = snapshot.data;
         return ExpansionTile(
           title: Text('Search nameday by day'),
           children: [
@@ -147,7 +147,7 @@ List<FutureBuilder> _tiles = [
     future: Nameday.searchByName(name: 'János', country: Countries.hu),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        SearchByName nameDays = snapshot.data;
+        SearchByNameData nameDays = snapshot.data;
         return ExpansionTile(
           title: Text('Search date by name'),
           children: [
@@ -172,8 +172,8 @@ List<FutureBuilder> _tiles = [
   ),
 ];
 
-/// Just some text formatting because
-/// I can't publish an ugly example file, can I?
+// Just some text formatting because
+// I can't publish an ugly example file, can I?
 TextStyle _textStyle() {
   return TextStyle(
     fontSize: 16.0,
