@@ -1,7 +1,7 @@
-<img src="doc/namedays.png" align="right"
-     alt="Flutter nameday API logo">
+<img src="https://raw.githubusercontent.com/hgergely03/flutter_nameday_package/master/doc/namedays.png" align="right"
+     alt="Namedays example">
 
-<img src="doc/logo.svg" align="right"
+<img src="https://raw.githubusercontent.com/hgergely03/flutter_nameday_package/master/doc/logo.svg" align="right"
      alt="Flutter nameday API logo" width="100" height="158">
 
 Is nameday functionality needed in your app? This package lets you implement it by speeding up getting nameday data over the internet. It is a wrapper for [Abalin.net nameday API](https://nameday.abalin.net/), so you won't have to fiddle with requests and parsing JSON. 
